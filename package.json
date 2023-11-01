@@ -1,0 +1,15 @@
+{
+  "name": "sktrading",
+  "version": "1.0.0",
+  "description": "sk trading bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "eric",
+  "license": "MIT",
+  "dependencies": {
+    "web3": "^4.2.1"
+  },
+  "type": "module" 
+}
