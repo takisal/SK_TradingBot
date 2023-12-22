@@ -14,7 +14,7 @@ const TIF = {
   GCD: 3,
 };
 
-const RPC_SK = "https://testnet.silverkoi.co/super-secret-silver-koi/";
+const RPC_SK = "URL HERE";
 
 function uinxTime() {
   return Math.floor(+new Date() / 1000);
