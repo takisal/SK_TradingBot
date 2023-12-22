@@ -1,2 +1,2 @@
 # SK_TradingBot
-Trading bot for Silver Koi
+Trading bot for Silver Koi Protocol
