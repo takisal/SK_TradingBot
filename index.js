@@ -56,7 +56,6 @@ function getInfos(marketId) {
     .getMarketInfo(marketId)
     .call()
     .then((result) => {
-      console.log({ result });
       result.ask = 0;
       result.bid = 0;
       markets[parseInt(result.marketId)] = result;
@@ -84,7 +83,6 @@ function grantPermissions(tokenAddress, amount, spender) {
 for (let i = 1; i <= 3; i++) {
   getInfos(i);
 }
-console.log(86);
 async function checkAmount(tokenAddress) {
   let erc20Contract = new skNetwork.eth.Contract(ERC20abi, tokenAddress);
   let amount = await erc20Contract.methods
@@ -149,7 +147,6 @@ function nextTickBelow(price) {
 }
 function doTrades(marketId) {
   if (makerStrat == true) {
-    console.log(153);
     let askTickToPlace = 0;
     let bidTickToPlace = 0;
     let currentAsk = markets[marketId].ask;
@@ -165,7 +162,7 @@ function doTrades(marketId) {
       console.log("No valid orders. Skipping trade placement");
       return;
     }
-    console.log({ zeroCount, currentAsk, currentBid });
+    console.log({ currentAsk, currentBid });
     if (zeroCount == 1) {
       if (currentAsk == 0) {
         bidTickToPlace = nextTickAbove(currentBid);
@@ -178,11 +175,9 @@ function doTrades(marketId) {
       askTickToPlace = nextTickBelow(currentAsk);
       bidTickToPlace = nextTickAbove(currentBid);
       if (askTickToPlace <= bidTickToPlace) {
-        console.log("equal", { askTickToPlace, bidTickToPlace });
         return;
       }
     }
-    console.log(184);
     placeDual(marketId, 55, bidTickToPlace, askTickToPlace, false);
     limitBool = true;
   } else {
@@ -214,9 +209,8 @@ function placeDual(marketId, durationSeconds, bidTick, askTick, gtc) {
 }
 //check position, if exists, use targetLeverage
 async function placeSignedTX(marketId, durationSeconds, tick, isBid, gtc) {
-  console.log(205);
   skNetwork.eth.getGasPrice().then((gasPrice) => {
-    console.log(207);
+    //TODO: make custom client order id
     let clientOrderId = Math.floor(Math.random() * 14967296);
     let positionSubId = 3;
     let side = isBid ? 0 : 1;
@@ -231,9 +225,6 @@ async function placeSignedTX(marketId, durationSeconds, tick, isBid, gtc) {
       tif = TIF.GCD;
       deadline = uinxTime() + durationSeconds;
     }
-    console.log({ tick });
-    console.log({ price: TickHelpers.toPriceX7(BigInt(tick)), tick });
-    console.log({ traderId, side, isBid });
     silverKoiContract.methods
       .encodePlaceOrderRequest([
         traderId,
@@ -261,8 +252,6 @@ async function placeSignedTX(marketId, durationSeconds, tick, isBid, gtc) {
         };
         nonce += BigInt(1);
         skNetwork.eth.accounts.signTransaction(tx, pk).then((signed) => {
-          console.log({ marketId });
-
           skNetwork.eth.sendSignedTransaction(signed.rawTransaction).on("receipt for market" + marketId, console.log);
         });
       });
