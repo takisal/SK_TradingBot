@@ -14,7 +14,7 @@ const TIF = {
   GCD: 3,
 };
 const makerStrat = strat == 0;
-const RPC_SK = "http://testnet-rpc.plumenetwork.xyz/infra-partner-http";
+const RPC_SK = "";
 
 function uinxTime() {
   return Math.floor(+new Date() / 1000);
