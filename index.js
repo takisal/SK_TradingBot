@@ -41,7 +41,6 @@ skNetwork.eth.getTransactionCount(skNetwork.eth.defaultAccount.address).then((tx
 });
 
 const markets = {};
-console.log(42);
 function getPrices(marketId) {
   silverKoiContract.methods
     .getBestPricesX7(marketId)
@@ -80,7 +79,7 @@ function grantPermissions(tokenAddress, amount, spender) {
     });
   });
 }
-for (let i = 1; i <= 3; i++) {
+for (let i = 1; i <= 6; i++) {
   getInfos(i);
 }
 async function checkAmount(tokenAddress) {
@@ -106,12 +105,12 @@ setInterval(() => {
   }
 }, 3000);
 let limitBool = false;
-setTimeout(() => {
+setInterval(() => {
   if (limitBool == false) {
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 6; i++) {
       setTimeout(() => {
         doTrades(i);
-      }, 5000 * (i - 1));
+      }, 10000 * (i - 1));
     }
   }
 }, 60000);
@@ -199,8 +198,8 @@ function placeDual(marketId, durationSeconds, bidTick, askTick, gtc) {
   }
 
   console.log("Prices for spread being placed: ", {
-    currentBid: markets[1].bid,
-    currentAsk: markets[1].ask,
+    currentBid: markets[marketId].bid,
+    currentAsk: markets[marketId].ask,
     myBidPrice: TickHelpers.toPriceX7(BigInt(bidTick)),
     myAskPrice: TickHelpers.toPriceX7(BigInt(askTick)),
     myBidTick: bidTick,
